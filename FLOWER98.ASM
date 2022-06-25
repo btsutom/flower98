@@ -1,28 +1,31 @@
 	;
-	; ��� 98
+	; ｵﾊﾅ 98
 	; Programed by T.KANAI
 
-	; �ݶ �޳��Ӳ� ��۸��� ����
-	; ��� ��Ų�޽�
+	; ﾅﾝｶ ﾄﾞｳﾃﾞﾓｲｲ ﾌﾟﾛｸﾞﾗﾑ ﾅﾉﾃﾞ
+	; ｿｰｽ ｷﾀﾅｲﾃﾞｽ｡
 
 	;2022/06/24 tsutoban@gmail.com
-	;���̃\�[�X�A�ǂ�����E�������v���o���Ȃ��E�E�E�B
-	;�R���p�C�����Ă݂���A�G���[�ł܂��肾�����̂ŁA�����܂����B
-	;�Ȃ����Ō�̂ق��ɂa�`�r�h�b���X�g�������āE�E�E�B
-	;�i�����܂����B�j���̃t�@�C���͊g���q���������ł����B
+	;このソース、どこから拾ったか思い出せない・・・。
+	;コンパイルしてみたら、エラーでまくりだったので、直しました。
+	;なぜか最後のほうにＢＡＳＩＣリストがあって・・・。
+	;（消しました。）元のファイルは拡張子がａｓｓでした。
 	;
-	;�C���@���̂P�@�V���{��emsg5�����������̂ŁA�ǉ��B����16�F�`�F�b�N����
-	;�@�@�@�@�@�@�@�G���[���b�Z�[�W
-	;�@�@�@���̂Q�@| ���g���Ă��̂ŁA�S��\n�i���s�j�ɒu��
-	;�@�@�@���̂R�@�V���{��grcgw�����������̂ŁA�ǉ��B
+	;修正　その１　シンボルemsg5が無かったので、追加。多分16色チェック時の
+	;　　　　　　　エラーメッセージ
+	;　　　その２　| が使われてたので、全部\n（改行）に置換
+	;　　　その３　シンボルgrcgwが無かったので、追加。
 	;
-	;�C����A�A�Z���u���{�����J�ł������t�@�C������Ė��Ȃ�
-	;�N�����邱�Ƃ��m�F���܂����B(PC-9821Cx + ODP:Cylix)
+	;修正後、アセンブラ＋リンカでｃｏｍファイル作って問題なく
+	;起動することを確認しました。(PC-9821Cx + ODP:Cylix)
 	;
-	;TurboAssembler�g���܂����B
-	;�I���W�i����flower98.com 7044byte
-	;�C����@�@��flower98.com 7172byte
-	;�ł��B�ꉞ�ʃt�@�C���ɂ��ꂼ��̃_���v���X�g���܂����B
+	;TurboAssembler使いました。
+	;オリジナルのflower98.com 7044byte
+	;修正後　　のflower98.com 7172byte
+	;です。一応別ファイルにそれぞれのダンプリストつけました。
+
+	;2022/06/25
+	;修正箇所について　　整形してません。
 
 code	segment
 	assume	cs:code,ds:code,es:code,ss:code
@@ -47,7 +50,7 @@ fadet	equ 1000
 
 	org	0100h
 start:  jmp start2
-	db	'��� 98 Ver.1.1',01ah
+	db	'ｵﾊﾅ 98 Ver.1.1',01ah
 msg1	db	'found HGSL  int_vector:','$'
 msg2	db	'H',0dh,0ah,'$'
 
@@ -307,7 +310,7 @@ psgt4		DB	 0, 0, 0	; 0
 
 	align 4
 start2:	cld
-	;��۸��ѻ��� � ���
+	;ﾌﾟﾛｸﾞﾗﾑｻｲｽﾞ ﾉ ｾｯﾄ
 	mov bx,offset program_end
 	shr bx,1
 	shr bx,1
@@ -324,11 +327,11 @@ start2:	cld
 	int 21h
 	align 4
 pssne:	mov sp,offset spwe
-	;�Ҳ÷�װ ����
+	;ﾁﾒｲﾃｷｴﾗｰ ｶｷｶｴ
 	mov ax,2524h
 	mov dx,offset failr
 	int 21h
-	;�����ݷ� �ݼ
+	;ﾁｭｳﾀﾞﾝｷｰ ｷﾝｼ
 	mov ax,2523h
 	mov dx,offset myin23
 	int 21h
@@ -339,7 +342,7 @@ pssne:	mov sp,offset spwe
 	mov [m500],al
 	or byte ptr es:[500h],100000b
 ; COMMENT !
-	;16����ް�� ����
+	;16ｼｮｸﾎﾞｰﾄﾞ ﾁｪｯｸ
 	xor ax,ax
 	mov es,ax
 	mov al,es:[054ch]
@@ -363,7 +366,7 @@ c16ok:
 	xor al,al
 	out 7ch,al
 	call waith ; grcg off
-	;hgsl ����
+	;hgsl ﾁｪｯｸ
 	mov ax,3540h
 	align 4
 hgslc1:	int 21h
@@ -402,9 +405,9 @@ mov cs:[pws],ds
 mov ax,cs
 mov ds,ax
 mov [pwo],si
-sb2c:	;������ް��2 ����
+sb2c:	;ｻｳﾝﾄﾞﾎﾞｰﾄﾞ2 ﾁｪｯｸ
 	call sbc
-	;�ޯ̧ ���
+	;ﾊﾞｯﾌｧ ｶｸﾎ
 	mov bx,2202+221+1393+1978;
 	mov ah,48h
 int 21h
@@ -499,7 +502,7 @@ call chgsl
 mov cs:[palwo],si
 mov cs:[palws],ds
 open:	;
-	; �����ݸ�
+	; ｵｰﾌﾟﾆﾝｸﾞ
 	;
 	mov ax,cs
 mov ds,ax
@@ -542,12 +545,12 @@ jc opwl
 mov ah,6
 call chgsl
 	;
-	; ʼ���
+	; ﾊｼﾞﾏﾘ
 	;
 	; paran    pcm
-	; segww	   ��ֳ
-	; segw+2   �޿޳1
-	; segww+2  �޿޳2
+	; segww	   ﾀｲﾖｳ
+	; segw+2   ｶﾞｿﾞｳ1
+	; segww+2  ｶﾞｿﾞｳ2
 
 	;cls
 	mov al,10000000b
@@ -570,7 +573,7 @@ rep	stosw
 	xor al,al
 out 7ch,al
 call waith ; grcg off
-	;�ð�� ˮ���
+	;ｽﾃｰｼﾞ ﾋｮｳｼﾞ
 	mov ax,cs
 mov ds,ax
 	mov si,[paran]
@@ -583,28 +586,28 @@ xor bx,bx
 mov cx,200
 mov ah,1
 call chgsl
-	;pcm خ��� ���
+	;pcm ﾘｮｳｲｷ ｶｸﾎ
 	mov ax,cs
 mov ds,ax
 	mov ax,[paran]
 add ax,2202
 mov [segw],ax ; (16128+8736+10368)/16=2202
 	mov [segww],ax
-	;��ֳ ۰��
+	;ﾀｲﾖｳ ﾛｰﾄﾞ
 	mov si,[segw]
 mov di,offset segw+2
 	mov dx,offset pic18
 call filer
-	;�޿޳ خ��� 1 ���
+	;ｶﾞｿﾞｳ ﾘｮｳｲｷ 1 ｶｸﾎ
 	mov ax,[segw+2]
 add ax,1393;22273/16+1
 mov [segw+4],ax
 mov [segww+2],ax
-	;�޿޳ خ��� 2 ���
+	;ｶﾞｿﾞｳ ﾘｮｳｲｷ 2 ｶｸﾎ
 	add ax,1978;29791/16+1+1855/16+1
 mov [segw+6],ax
 mov [segww+4],ax
-	;v-sync �غ�
+	;v-sync ﾜﾘｺﾐ
 	mov ax,cs
 mov ds,ax
 	in al,02h
@@ -629,20 +632,20 @@ out 02h,al
 out 64h,al ; vsync on
 	;
 	
-	;pcm01 ۰��
+	;pcm01 ﾛｰﾄﾞ
 	mov ax,cs
 mov ds,ax
 	mov si,[paran]
 mov di,offset segw
 	mov dx,offset pcm01
 call filer
-	;��޺�׶ ���޷� �ȶ� ����� ��ϼ��
+	;｢ﾄﾞｺｶﾗｶ ﾄﾝﾃﾞｷﾀ ﾀﾈｶﾞ ﾋﾄﾂﾌﾞ ｱﾘﾏｼﾀ｣
 	call fpcmp
 p0101:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0101	;pcm �� ������ ϯò�
-	;�ȶ����
+jc p0101	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ﾀﾈｶﾞﾄﾌﾞ
 	mov word ptr [seedc],offset a01d+4
 mov byte ptr [floc],1
 	mov si,[paran]
@@ -656,13 +659,13 @@ call filer
 p0102:	call escc
 cmp word ptr [seedc],0ffffh
 jc p0102
-	;������ ����� ����ϼ��
+	;｢ｿﾉﾀﾈﾊ ｽｸｽｸﾄ ｿﾀﾞﾁﾏｼﾀ｣
 	call fpcmp
 p0103:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0103	;pcm �� ������ ϯò�
-	;�Ŷ� ʴʼ��� with �ޯ��
+jc p0103	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ﾊﾅｶﾞ ﾊｴﾊｼﾞﾒﾙ with ｻﾞｯｿｳ
 	mov word ptr [p02c],offset a02d
 mov word ptr [hgsap],offset fad02
 	mov byte ptr [floc],2
@@ -682,13 +685,13 @@ call filer
 p0201:	call escc
 cmp word ptr [p02c],0fffeh
 jc p0201
-	;��� ���Ų ���������
+	;｢ｱｯ ｱﾌﾞﾅｲ ﾀﾍﾞﾗﾚﾁｬｳ｣
 	call fpcmp
 p0202:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0202	;pcm �� ������ ϯò�
-	;Ⱥ �ޯ������ ����
+jc p0202	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ﾈｺ ｻﾞｯｿｳﾀﾍﾞﾃ ﾀﾁｻﾙ
 	mov word ptr [p03c],0
 mov word ptr [hgsap],offset fad03
 	mov byte ptr [floc],3
@@ -703,13 +706,13 @@ call filer
 p0301:	call escc
 cmp word ptr [p03c],47
 jc p0301
-	;���ֶ�� �޷�޷��ܣ
+	;｢ｱｰﾖｶｯﾀ ﾄﾞｷﾄﾞｷｼﾀﾜ｣
 	call fpcmp
 p0302:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0302	;pcm �� ������ ϯò�
-	;���� ������ ��
+jc p0302	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ﾁｮｯﾄ ﾊﾟﾀﾊﾟﾀ ｽﾙ
 	mov word ptr [p04c],0
 mov word ptr [hgsap],offset fad05
 	mov byte ptr [floc],4
@@ -729,13 +732,13 @@ call filer
 p0401:	call escc
 cmp word ptr [p04c],10
 jc p0401
-	;���� ���� �������� � ¹ϼ��
+	;｢ｿｼﾃ ﾋﾄﾂﾉ ﾁｲｻﾅﾂﾎﾞﾐ ｦ ﾂｹﾏｼﾀ｣
 	call fpcmp
 p0402:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0402	;pcm �� ������ ϯò�
-	;���� � ¹�
+jc p0402	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ﾂﾎﾞﾐ ｦ ﾂｹﾙ
 	mov word ptr [p05c],0
 mov word ptr [p05c2],0
 mov word ptr [p05c3],0
@@ -752,13 +755,13 @@ call filer
 p0501:	call escc
 cmp word ptr [p05c],60
 jc p0501
-	;���� ��ķ�
+	;｢ｼｶｼ ｿﾉﾄｷ｣
 	call fpcmp
 p0502:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0502	;pcm �� ������ ϯò�
-	;�ӻ� ĳ�ޮ�
+jc p0502	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｸﾓｻﾝ ﾄｳｼﾞｮｳ
 	mov si,[paran]
 mov di,offset segw
 	mov dx,offset pcm07
@@ -785,7 +788,7 @@ call filer
 p0503:	call escc
 cmp word ptr [p05c],80+28+6
 jc p0503
-	;��ܰ ���ð�
+	;｢ｳﾜｰ ﾀｽｹﾃｰ｣
 	mov word ptr [timec],0
 mov word ptr [timec2],0
 	mov ax,[paran]
@@ -800,8 +803,8 @@ out 2,al ; int on
 p0504:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0504	;pcm �� ������ ϯò�
-	;���ۺ�� �߶��
+jc p0504	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;｢ｺﾞﾛｺﾞﾛ ﾋﾟｶｯ｣
 	mov word ptr [timec],0
 mov word ptr [timec2],0
 	mov ax,[p05pw1]
@@ -816,14 +819,14 @@ out 2,al ; int on
 p0505:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0505	;pcm �� ������ ϯò�
-	;���� ����޷
+jc p0505	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｶﾐﾅﾘ ﾁｮｸｹﾞｷ
 	mov word ptr [p06c],0
 	mov byte ptr [floc],6
 p0601:	call escc
 cmp word ptr [p06c],3
 jc p0601
-	;������������
+	;｢ｳｫｫｫｫｰｰｰｰｰ｣
 	mov word ptr [timec],0
 mov word ptr [timec2],0
 	mov ax,[p05pw2]
@@ -838,8 +841,8 @@ out 2,al ; int on
 p0602:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0602	;pcm �� ������ ϯò�
-	;�ޯ�� ��޹��
+jc p0602	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｻﾞｯｿｳ ｸﾀﾞｹﾁﾙ
 	mov word ptr [p07c],0
 mov byte ptr [palsw],0
 	mov byte ptr [floc],7
@@ -854,13 +857,13 @@ call filer
 p0701:	call escc
 cmp word ptr [p07c],3+9
 jc p0701
-	;����� � ζ��� � ��ϼ��
+	;｢ｶﾐﾅﾘ ﾊ ﾎｶﾉﾊﾅ ﾆ ｵﾁﾏｼﾀ｣
 	call fpcmp
 p0702:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0702	;pcm �� ������ ϯò�
-	;�ޯ�� ���Ҹ
+jc p0702	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｻﾞｯｿｳ ｳｺﾞﾒｸ
 	mov word ptr [p08c],0
 	mov byte ptr [floc],8
 	mov si,[paran]
@@ -875,13 +878,13 @@ call filer
 p0801:	call escc
 cmp word ptr [p08c],10
 jc p0801
-	;��ܰ ���Ʊ��Ÿ� ֶ��ܰ�
+	;｢ｳﾜｰ ﾜﾀｼﾆｱﾀﾗﾅｸﾃ ﾖｶｯﾀﾜｰ｣
 	call fpcmp
 p0802:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0802	;pcm �� ������ ϯò�
-	;�ϸ�� ˸
+jc p0802	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｱﾏｸﾞﾓ ﾋｸ
 	mov word ptr [p09c],0
 mov word ptr [p09c2],0
 	mov byte ptr [floc],9
@@ -896,13 +899,13 @@ call filer
 p0901:	call escc
 cmp word ptr [p09c],17+16
 jc p0901
-	;��� ���ж� �׷���
+	;｢ｱｯ ﾂﾎﾞﾐｶﾞ ﾋﾗｷｿｳ｣
 	call fpcmp
 p0902:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p0902	;pcm �� ������ ϯò�
-	;����� ���жޥ��
+jc p0902	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｱｯ･･･ ﾂﾎﾞﾐｶﾞ･･･
 	mov word ptr [p10c],0
 	mov byte ptr [floc],10
 	mov si,[paran]
@@ -916,13 +919,13 @@ call filer
 p1001:	call escc
 cmp word ptr [p10c],20
 jc p1001
-	;�ʯ ί ӳ��� �����ڣ
+	;｢ﾊｯ ﾎｯ ﾓｳｽｺｼ ｶﾞﾝﾊﾞﾚ｣
 	call fpcmp
 p1002:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p1002	;pcm �� ������ ϯò�
-	;�������
+jc p1002	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｶﾞﾝﾊﾞﾙﾝ
 	mov word ptr [p10c],0
 	mov si,[paran]
 mov di,offset segw
@@ -931,13 +934,13 @@ call filer
 p1003:	call escc
 cmp word ptr [p10c],20
 jc p1003
-	;�ּ ������ ������ ӳ����ޣ
+	;｢ﾖｼ ｶﾞﾝﾊﾞﾚ ｶﾞﾝﾊﾞﾚ ﾓｳｽｺｼﾀﾞ｣
 	call fpcmp
 p1004:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p1004	;pcm �� ������ ϯò�
-	;������� 2
+jc p1004	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｶﾞﾝﾊﾞﾙﾝ 2
 	mov word ptr [p10c],0
 	mov si,[paran]
 mov di,offset segw
@@ -946,13 +949,13 @@ call filer
 p1005:	call escc
 cmp word ptr [p10c],20
 jc p1005
-	;������� ������ �����ڰ�
+	;｢ｶﾞﾝﾊﾞﾚ ｶﾞﾝﾊﾞﾚ ｶﾞﾝﾊﾞﾚｰ｣
 	call fpcmp
 p1006:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p1006	;pcm �� ������ ϯò�
-	;��� ��
+jc p1006	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｵﾊﾅ ｻｸ
 	mov word ptr [p11c],0
 	mov byte ptr [floc],11
 	mov si,[paran]
@@ -966,16 +969,16 @@ call filer
 p1101:	call escc
 cmp word ptr [p11c],10
 jc p1101
-	;��� ������
+	;ｻｲﾃ ﾊﾟﾀﾊﾟﾀ
 	mov word ptr [p12c],0
 mov word ptr [p12c2],0
 	mov byte ptr [floc],12
-	;��ܰ ��� ����
+	;｢ｳﾜｰ ｻｲﾀ ｻｲﾀ｣
 	call fpcmp
 p1102:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p1102	;pcm �� ������ ϯò�
+jc p1102	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
 	;
 	mov word ptr [p12c],0
 	mov si,[paran]
@@ -985,13 +988,13 @@ call filer
 p1201:	call escc
 cmp word ptr [p12c],8
 jc p1201
-	;��ڲƻ���
+	;｢ｷﾚｲﾆｻｲﾀ｣
 	call fpcmp
 p1202:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p1202	;pcm �� ������ ϯò�
-	;��� ������ 2
+jc p1202	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｻｲﾃ ﾊﾟﾀﾊﾟﾀ 2
 	mov word ptr [p12c],0
 	mov si,[paran]
 mov di,offset segw
@@ -1000,13 +1003,13 @@ call filer
 p1203:	call escc
 cmp word ptr [p12c],8
 jc p1203
-	;�ֶ��Ȱ�
+	;｢ﾖｶｯﾀﾈｰ｣
 	call fpcmp
 p1204:	call escc
 	mov ax,[bpoim]
 cmp [bpoi],ax
-jc p1204	;pcm �� ������ ϯò�
-	;��� ������ 3
+jc p1204	;pcm ｶﾞ ｵﾜﾙﾏﾃﾞ ﾏｯﾃｲﾙ
+	;ｻｲﾃ ﾊﾟﾀﾊﾟﾀ 3
 	mov word ptr [p12c],0
 p1205:	call escc
 cmp word ptr [p12c],16
@@ -1029,7 +1032,7 @@ and al,0fbh
 out 02h,al
 out 64h,al ; vsync on
 	;
-	; ���ިݸ�
+	; ｴﾝﾃﾞｨﾝｸﾞ
 	;
 	mov ax,cs
 mov ds,ax
@@ -1124,7 +1127,7 @@ call word ptr cs:[bx+offset fljpt]
 fl00:	ret
 	
 	align 4
-fl01:	;�� ��
+fl01:	;ﾀﾈ ｹｽ
 	mov bx,cs:[seedc]
 cmp bx,0ffffh
 jz fl0102
@@ -1135,7 +1138,7 @@ mov ax,cs:[bx+2]
 	xor [di],ax
 xor [di+80],ax
 xor [di+80*2],ax
-	;�� ��
+	;ﾀﾈ ｶｸ
 	add bx,4
 mov di,cs:[bx]
 cmp di,0ffffh
@@ -1151,7 +1154,7 @@ fl0101:	mov cs:[seedc],di
 jmp fl0102
 	
 	align 4
-fl02:	;ʴʼ��� with �ޯ��
+fl02:	;ﾊｴﾊｼﾞﾒﾙ with ｻﾞｯｿｳ
 fl0203:	mov bp,cs:[p02c]
 cmp bp,0fffeh
 jnc fl0202
@@ -1180,7 +1183,7 @@ fl0201:	mov cs:[p02c],bx
 jmp fl0202
 
 	align 4
-fl03:	;Ⱥ ����Ŷ�� �����
+fl03:	;ﾈｺ ﾀﾁｻﾘﾅｶﾞﾗ ｸｿｦｽﾙ
 	mov ax,cs:[p03c]
 inc ax
 mov cs:[p03c],ax
@@ -1301,7 +1304,7 @@ xor bx,bx
 mov cx,56+200
 mov ah,1
 call chgsl
-fl0505:	;�ϸ��
+fl0505:	;ｱﾏｸﾞﾓ
 	cmp cs:[p05c],80
 jc fl0501
 	mov ax,cs:[p05c3]
@@ -2081,7 +2084,7 @@ ret
 
 
 	align 4
-sbc:	;������ް�� ����
+sbc:	;ｻｳﾝﾄﾞﾎﾞｰﾄﾞ ﾁｪｯｸ
 vsy1:	in al,0a0h
 test al,00100000b
 jz  vsy1
@@ -2104,7 +2107,7 @@ t8m:	mov ax,ti08t
 mov bx,ti08m
 tmse:	mov [timen],ax
 mov [coum],bx
-sb1c:	;������ް��1 ����
+sb1c:	;ｻｳﾝﾄﾞﾎﾞｰﾄﾞ1 ﾁｪｯｸ
 	mov dx,088h+0
 in al,dx
 rol al,1
@@ -2448,7 +2451,7 @@ pws	dw	?
 i0a_adr	label	dword
 i0ao	dw	?
 i0as	dw	?
-paran	dw	?	;�ޯ̧ seg
+paran	dw	?	;ﾊﾞｯﾌｧ seg
 segw	dw	20 dup (?)
 
 
@@ -2494,10 +2497,10 @@ evsif	db	?
 	;db ?;even?
 filenwl	dw	?
 filenw	db	80 dup (?)
-	dw	128 dup (?)	;���� ܰ�
+	dw	128 dup (?)	;ｽﾀｯｸ ﾜｰｸ
 spwe:
 
 
 program_end	label	byte
 code	ends
-end start
+end start
