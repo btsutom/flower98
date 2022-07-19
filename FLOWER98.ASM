@@ -18,6 +18,7 @@
 	;
 	;修正後、アセンブラ＋リンカでｃｏｍファイル作って問題なく
 	;起動することを確認しました。(PC-9821Cx + ODP:Cylix)
+	;処理系 tasm + TurboC++2nd
 	;
 	;TurboAssembler使いました。
 	;オリジナルのflower98.com 7044byte
